@@ -20,6 +20,10 @@ public class RoverApplication {
     private GpioPinDigitalOutput right;
     private GpioPinDigitalOutput backward;
 
+    public RoverApplication() {
+        initialize();
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(RoverApplication.class, args);
     }
@@ -41,25 +45,26 @@ public class RoverApplication {
             backward();
         }
         LOG.info("RESPONSE Direction = {}", direction);
+        LOG.info("right {} left {} forward {} backward {}", right.isHigh(), left.isHigh(), forward.isHigh(), backward.isHigh());
         return direction;
     }
 
     private void forward() throws InterruptedException {
-        initialize();
+//        initialize();
         forward.low();
         Thread.sleep(100);
         forward.high();
     }
 
     private void backward() throws InterruptedException {
-        initialize();
+//        initialize();
         backward.low();
         Thread.sleep(100);
         backward.high();
     }
 
     private void leftBack() throws InterruptedException {
-        initialize();
+//        initialize();
         left.low();
         Thread.sleep(100);
         backward.low();
@@ -72,7 +77,7 @@ public class RoverApplication {
     }
 
     private void leftForward() throws InterruptedException {
-        initialize();
+//        initialize();
         left.low();
         Thread.sleep(100);
         forward.low();
@@ -85,7 +90,7 @@ public class RoverApplication {
     }
 
     private void rightBack() throws InterruptedException {
-        initialize();
+//        initialize();
         right.low();
         Thread.sleep(100);
         backward.low();
@@ -98,7 +103,7 @@ public class RoverApplication {
     }
 
     private void rightForward() throws InterruptedException {
-        initialize();
+//        initialize();
         right.low();
         Thread.sleep(100);
         forward.low();
@@ -117,15 +122,19 @@ public class RoverApplication {
         if (gpio == null) {
             gpio = GpioFactory.getInstance();
 
-            right = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Right", PinState.HIGH);
-            left = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Left", PinState.HIGH);
-            forward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Forward", PinState.HIGH);
-            backward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Backward", PinState.HIGH);
+            right = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Right", PinState.HIGH);
+            left = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_19, "Left", PinState.HIGH);
+            forward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Forward", PinState.HIGH);
+            backward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "Backward", PinState.HIGH);
+
+            LOG.info("INITIALIZED IN IF");
         }
 
         right.high();
         left.high();
         forward.high();
         backward.high();
+
+        LOG.info("right {} left {} forward {} backward {}", right.isHigh(), left.isHigh(), forward.isHigh(), backward.isHigh());
     }
 }
