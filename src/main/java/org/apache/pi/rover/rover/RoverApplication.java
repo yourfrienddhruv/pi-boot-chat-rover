@@ -59,6 +59,7 @@ public class RoverApplication {
     }
 
     private void leftBack() throws InterruptedException {
+        initialize();
         left.low();
         Thread.sleep(100);
         backward.low();
@@ -96,25 +97,6 @@ public class RoverApplication {
         right.high();
     }
 
-    /**
-     * NOTE : PIN Numbering are NOT SAME as hardware : http://pi4j.com/pins/model-zero-rev1.html
-     */
-    private void initialize() {
-        if (gpio == null) {
-            gpio = GpioFactory.getInstance();
-
-            right = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Right", PinState.LOW);
-            left = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Left", PinState.LOW);
-            forward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Forward", PinState.LOW);
-            backward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Backward", PinState.LOW);
-        }
-
-        right.low();
-        left.low();
-        forward.low();
-        backward.low();
-    }
-
     private void rightForward() throws InterruptedException {
         initialize();
         right.low();
@@ -128,4 +110,22 @@ public class RoverApplication {
         right.high();
     }
 
+    /**
+     * NOTE : PIN Numbering are NOT SAME as hardware : http://pi4j.com/pins/model-zero-rev1.html
+     */
+    private void initialize() {
+        if (gpio == null) {
+            gpio = GpioFactory.getInstance();
+
+            right = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "Right", PinState.HIGH);
+            left = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Left", PinState.HIGH);
+            forward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "Forward", PinState.HIGH);
+            backward = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "Backward", PinState.HIGH);
+        }
+
+        right.high();
+        left.high();
+        forward.high();
+        backward.high();
+    }
 }
