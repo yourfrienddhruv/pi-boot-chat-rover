@@ -49,6 +49,34 @@ public class RoverApplication {
         return direction;
     }
 
+    @GetMapping(path = "drivev2")
+    public String drive(@RequestParam Integer w,
+                        @RequestParam Integer a,
+                        @RequestParam Integer s,
+                        @RequestParam Integer d) throws InterruptedException {
+        if (w == 1) {
+            forward.low();
+        } else {
+            forward.high();
+        }
+        if (a == 1) {
+            left.low();
+        } else {
+            left.high();
+        }
+        if (s == 1) {
+            backward.low();
+        } else {
+            backward.high();
+        }
+        if (d == 1) {
+            right.low();
+        } else {
+            right.high();
+        }
+        return w.toString() + a.toString() + s.toString() + d.toString();
+    }
+
     private void forward() throws InterruptedException {
 //        initialize();
         forward.low();
